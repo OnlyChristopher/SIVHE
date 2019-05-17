@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from seantheme.com/color-admin-v4.3/admin/assets/plugins/jstree/test/visual/desktop/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 01 Feb 2019 04:53:02 GMT -->
+<head>
+	<meta charset="UTF-8">
+	<title>Light theme visual tests</title>
+	<link rel="stylesheet" href="https://seantheme.com/color-admin-v4.3/admin/assets/plugins/jstree/dist/themes/default/style.min.css">
+	<link rel="stylesheet" href="https://seantheme.com/color-admin-v4.3/admin/assets/plugins/jstree/dist/themes/default-dark/style.min.css">
+	<style>.tree { border:1px solid black; padding:10px; width:300px; margin:20px; float:left; min-height:200px; }</style>
+</head>
+<body style="background:white;">
+	<div class="tree" id="empty"></div>
+	<div class="tree" id="core"><ul><li>asdf</li></ul></div>
+	<div class="tree" id="tree">
+		<ul>
+			<li>Node 01
+				<ul>
+					<li>Node</li>
+					<li>Node</li>
+				</ul>
+			</li>
+			<li>Node 02</li>
+			<li data-jstree='{"opened" : true}'>Node 03
+				<ul>
+					<li>Node</li>
+					<li>Node</li>
+				</ul>
+			</li>
+			<li>Node 04</li>
+			<li>Node 05</li>
+		</ul>
+	</div>
+	<div class="tree" id="full"><ul><li data-jstree='{ "selected" : true, "type" : "file" }'>full</li><li>asdf</li></ul></div>
+	<div class="tree" id="dark"><ul><li data-jstree='{ "selected" : true, "type" : "file"}'>full</li><li>asdf</li></ul></div>
+
+	<script src="https://seantheme.com/color-admin-v4.3/admin/assets/plugins/jstree/dist/libs/jquery.js"></script>
+	<script src="https://seantheme.com/color-admin-v4.3/admin/assets/plugins/jstree/dist/jstree.min.js"></script>
+	<script>
+	$('#empty').jstree();
+	$('#tree, #core').jstree();
+	$('#full').jstree({ plugins : ["checkbox","sort","types","wholerow"], "types" : { "file" : { "icon" : "jstree-file" } } });
+	$('#dark').jstree({ plugins : ["checkbox","sort","types","wholerow"], "core" : { "themes" : { "name" : "default-dark" } }, "types" : { "file" : { "icon" : "jstree-file" } } });
+	</script>
+</body>
+
+<!-- Mirrored from seantheme.com/color-admin-v4.3/admin/assets/plugins/jstree/test/visual/desktop/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 01 Feb 2019 04:53:02 GMT -->
+</html>
