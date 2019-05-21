@@ -91,12 +91,12 @@
                                                                         class="fa fa-pencil-alt"></i></button>
                                                             @csrf
                                                             @method('DELETE')
-                                                                <button type="button"  data-click="swal-danger" data-backdrop="btn-personal-delete"
+                                                                <button type="button"  data-click="swal-danger" data-backdrop="btn-personal-delete-{{$empleado->idempleado}}"
                                                                         class="btn btn-icon btn-sm btn-danger" data-toggle="tooltip"
                                                                         data-container="body" data-title="Eliminar"><i
                                                                             class="fa fa-trash-alt"></i></button>
 
-                                                                <button id="btn-personal-delete" type="submit" style="display: none;"
+                                                                <button id="btn-personal-delete-{{$empleado->idempleado}}" type="submit" style="display: none;"
                                                                         class="btn btn-sm btn-icon btn-danger"><i
                                                                             class="fa fa-trash-alt"></i>
                                                                 </button>

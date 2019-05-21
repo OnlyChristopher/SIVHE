@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
 class ContratosController extends Controller
@@ -30,7 +30,7 @@ class ContratosController extends Controller
 
 	        $datos = DB::table('contratos')->get();
 	        foreach ($datos as $dato){
-		        $DeferenceInDays = Carbon::parse(Carbon::now())->diffInDays($dato->ffin);
+		        $DeferenceInDays = Carbon::parse($dato->ffin)->diffInDays(Carbon::now(), false);
 		        if( $DeferenceInDays > 0){
 			        DB::table('contratos')->where('idcontrato', $dato->idcontrato)->update(['estado' => 0]);
 		        }else{
@@ -170,12 +170,16 @@ class ContratosController extends Controller
      */
     public function destroy($id)
     {
-	    DB::table('contratos')->where('idcontrato',$id)->delete();
+	    try {
+		    $empleados = DB::table('contratos')->where('idcontrato',$id)->first();
+		    DB::table('contratos')->where('idcontrato',$id)->delete();
 
-	    $max = DB::table('contratos')->max('idcontrato') + 1;
-	    DB::statement("ALTER TABLE contratos AUTO_INCREMENT =  $max");
-
-	    return redirect()->route('contratoPersonal', $id)
+		    $max = DB::table('contratos')->max('idcontrato') + 1;
+		    DB::statement("ALTER TABLE contratos AUTO_INCREMENT =  $max");
+	    }catch (\Exception $e){
+		    return back()->with('success',$e->getMessage());
+	    }
+	    return redirect()->route('contratoPersonal', $empleados->idempleado)
 	                     ->with('success', 'Registro eliminado correctamente');
 
     }

@@ -80,13 +80,15 @@
                                                     @endif
                                                 </td>
                                                 <td nowrap>{{$proyecto->comentario}}</td>
-                                                <td nowrap>  @if($proyecto->documento)
+                                                <td nowrap>
+                                                    @if($proyecto->documento)
                                                         <a href="{{ route('downloadfileProyectos', $proyecto->id_proyecto)}}"
                                                            title=""
                                                            class="btn btn-warning btn-icon btn-sm" data-toggle="tooltip" data-container="body" data-title="Descargas">
                                                             <i class="fa fa-file-excel"></i>
                                                         </a>
-                                                    @endif</td>
+                                                    @endif
+                                                </td>
                                                 <td nowrap>
                                                     <form action="{{ route('proyectos.destroy', $proyecto->id_proyecto) }}"
                                                           method="post">

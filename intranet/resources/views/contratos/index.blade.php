@@ -94,11 +94,11 @@
                                                                 @csrf
                                                                 @method('DELETE')
 
-                                                                <button id="btn-contrato-delete" type="submit" style="display: none;"
+                                                                <button id="btn-contrato-delete-{{$contrato->idcontrato}}" type="submit" style="display: none;"
                                                                         class="btn btn-sm btn-icon btn-danger"><i
                                                                             class="fa fa-trash-alt"></i>
                                                                 </button>
-                                                                <button  type="button" data-click="swal-danger" data-backdrop="btn-contrato-delete"
+                                                                <button  type="button" data-click="swal-danger" data-backdrop="btn-contrato-delete-{{$contrato->idcontrato}}"
                                                                          class="btn btn-icon btn-sm btn-danger" data-toggle="tooltip"
                                                                          data-container="body" data-title="Eliminar"><i
                                                                             class="fa fa-trash-alt"></i></button>

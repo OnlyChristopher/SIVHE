@@ -60,6 +60,7 @@
                                             <th>Fecha Emisión</th>
                                             <th>Fecha Vencimiento</th>
                                             <th>Estado</th>
+                                            <th>Documento</th>
                                             <th>Acciones</th>
                                         </tr>
                                         </thead>
@@ -77,6 +78,15 @@
                                                     @endif
                                                 </td>
                                                 <td nowrap>
+                                                    @if($induccion->documento)
+                                                        <a href="{{ route('downloadfileInducciones', $induccion->idinduccion)}}"
+                                                           title=""
+                                                           class="btn btn-danger btn-icon btn-sm" data-toggle="tooltip" data-container="body" data-title="Descargas">
+                                                            <i class="fa fa-file-pdf"></i>
+                                                        </a>
+                                                    @endif
+                                                </td>
+                                                <td nowrap>
                                                     <form action="{{ route('inducciones.destroy', $induccion->idinduccion) }}"
                                                           method="post">
                                                         @if( Auth::user()->profile == 1|| Auth::user()->profile == 2)
@@ -90,11 +100,11 @@
                                                                 @csrf
                                                                 @method('DELETE')
 
-                                                                <button id="btn-inducciones-delete" type="submit" style="display: none;"
+                                                                <button id="btn-inducciones-delete-{{$induccion->idinduccion}}" type="submit" style="display: none;"
                                                                         class="btn btn-sm btn-icon btn-danger"><i
                                                                             class="fa fa-trash-alt"></i>
                                                                 </button>
-                                                                <button  type="button" data-click="swal-danger" data-backdrop="btn-inducciones-delete"
+                                                                <button  type="button" data-click="swal-danger" data-backdrop="btn-inducciones-delete-{{$induccion->idinduccion}}"
                                                                          class="btn btn-icon btn-sm btn-danger" data-toggle="tooltip"
                                                                          data-container="body" data-title="Eliminar"><i
                                                                             class="fa fa-trash-alt"></i></button>

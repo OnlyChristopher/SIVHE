@@ -69,7 +69,7 @@
                                                 <td nowrap>{{$operador->nombres}}</td>
                                                 <td nowrap>{{$operador->apellidos}}</td>
                                                 <td nowrap>{{$operador->numcontrato}}</td>
-                                                <td nowrap>{{$operador->id_cliente}}</td>
+                                                <td nowrap>{{$operador->nombre_cliente}}</td>
                                                 <td nowrap>
                                                     <form action="{{ route('operadores.destroy', $operador->idoperador) }}"
                                                           method="post">
@@ -84,11 +84,11 @@
                                                                 @csrf
                                                                 @method('DELETE')
 
-                                                                <button id="btn-operadores-delete" type="submit" style="display: none;"
+                                                                <button id="btn-operadores-delete-{{$operador->idoperador}}" type="submit" style="display: none;"
                                                                         class="btn btn-sm btn-icon btn-danger"><i
                                                                             class="fa fa-trash-alt"></i>
                                                                 </button>
-                                                                <button  type="button" data-click="swal-danger" data-backdrop="btn-operadores-delete"
+                                                                <button  type="button" data-click="swal-danger" data-backdrop="btn-operadores-delete-{{$operador->idoperador}}"
                                                                          class="btn btn-icon btn-sm btn-danger" data-toggle="tooltip"
                                                                          data-container="body" data-title="Eliminar"><i
                                                                             class="fa fa-trash-alt"></i></button>

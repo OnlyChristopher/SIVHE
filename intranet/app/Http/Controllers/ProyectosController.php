@@ -186,11 +186,14 @@ class ProyectosController extends Controller
 	 */
 	public function destroy($id)
 	{
-		DB::table('proyectos')->where('id_proyecto', $id)->delete();
+		try {
+			DB::table('proyectos')->where('id_proyecto', $id)->delete();
 
-		$max = DB::table('proyectos')->max('id_proyecto') + 1;
-		DB::statement("ALTER TABLE proyectos AUTO_INCREMENT =  $max");
-
+			$max = DB::table('proyectos')->max('id_proyecto') + 1;
+			DB::statement("ALTER TABLE proyectos AUTO_INCREMENT =  $max");
+		}catch (\Exception $e){
+			return back()->with('success',$e->getMessage());
+		}
 		return redirect()->route('proyectos.index')
 		                 ->with('success', 'Registro eliminado correctamente');
 

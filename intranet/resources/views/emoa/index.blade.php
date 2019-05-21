@@ -61,7 +61,7 @@
                                             <th>Fecha Vencimiento</th>
                                             <th>Observaciones</th>
                                             <th>Estado</th>
-                                            <th>Documentos</th>
+                                            <th>Documento</th>
                                             <th>Acciones</th>
                                         </tr>
                                         </thead>
@@ -79,8 +79,15 @@
                                                         <span class="label label-danger">Cesado</span>
                                                     @endif
                                                 </td>
-                                                <td nowrap>{{$emoa->documento}}</td>
-
+                                                <td nowrap>
+                                                    @if($emoa->documento)
+                                                        <a href="{{ route('downloadfileEmoa', $emoa->idemoa)}}"
+                                                           title=""
+                                                           class="btn btn-danger btn-icon btn-sm" data-toggle="tooltip" data-container="body" data-title="Descargas">
+                                                            <i class="fa fa-file-pdf"></i>
+                                                        </a>
+                                                    @endif
+                                                </td>
                                                 <td nowrap>
                                                     <form action="{{ route('emoa.destroy', $emoa->idemoa) }}"
                                                           method="post">
@@ -95,11 +102,11 @@
                                                                 @csrf
                                                                 @method('DELETE')
 
-                                                                <button id="btn-emoa-delete" type="submit" style="display: none;"
+                                                                <button id="btn-emoa-delete-{{$emoa->idemoa}}" type="submit" style="display: none;"
                                                                         class="btn btn-sm btn-icon btn-danger"><i
                                                                             class="fa fa-trash-alt"></i>
                                                                 </button>
-                                                                <button  type="button" data-click="swal-danger" data-backdrop="btn-emoa-delete"
+                                                                <button  type="button" data-click="swal-danger" data-backdrop="btn-emoa-delete-{{$emoa->idemoa}}"
                                                                          class="btn btn-icon btn-sm btn-danger" data-toggle="tooltip"
                                                                          data-container="body" data-title="Eliminar"><i
                                                                             class="fa fa-trash-alt"></i></button>

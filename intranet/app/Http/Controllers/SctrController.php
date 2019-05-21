@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class SctrController extends Controller
 {
@@ -24,7 +25,15 @@ class SctrController extends Controller
 	        $sctr       = DB::table('sctr')
 		                   ->where('idempleado', $id)
 		                   ->paginate(10);
-
+		    $datos = DB::table('sctr')->get();
+		    foreach ($datos as $dato){
+			    $DeferenceInDays = Carbon::parse($dato->fvencimiento)->diffInDays(Carbon::now(), false);
+			    if( $DeferenceInDays > 0){
+				    DB::table('sctr')->where('idsctr', $dato->idsctr)->update(['estado' => 0]);
+			    }else{
+				    DB::table('sctr')->where('idsctr', $dato->idsctr)->update(['estado' => 1]);
+			    }
+		    }
 	    }catch (\Exception $e) {
 		    return back()->with('success',$e->getMessage());
 	    }
@@ -36,9 +45,10 @@ class SctrController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $empleados = DB::table('sctr')->where('idsctr',$id)->first();
+        return view('sctr.create', ['empleados' => $empleados]);
     }
 
     /**
@@ -49,7 +59,30 @@ class SctrController extends Controller
      */
     public function store(Request $request)
     {
-        //
+	    try {
+		    $idempleado     = $request->input('idempleado');
+		    $numsctr        = $request->input('numsctr');
+		    $femision       = $request->input('femision');
+		    $fvencimiento   = $request->input('fvencimiento');
+		    $estado         = $request->input('estado');
+		    $usuario        = $request->input('id_user');
+		    $fecha          = $this->dateformt;
+
+
+		    $data   = array('idempleado' => $idempleado,
+		                    'numsctr' => $numsctr,
+		                    'femision' => $femision,
+		                    'fvencimiento' => $fvencimiento,
+		                    'estado' => $estado,
+		                    'usuario_creacion' => $usuario,
+		                    'fecha_creacion' => $fecha);
+
+		    DB::table('sctr')->insert($data);
+	    }catch (\Exception $e){
+		    return back()->with('success',$e->getMessage());
+	    }
+	    return redirect()->route('sctrPersonal', $idempleado)
+	                     ->with('success','Registro Exitoso');
     }
 
     /**
@@ -71,7 +104,8 @@ class SctrController extends Controller
      */
     public function edit($id)
     {
-        //
+	    $sctr = DB::table('sctr')->where('idsctr', $id)->first();
+	    return view('sctr.edit', ['sctr' => $sctr]);
     }
 
     /**
@@ -83,7 +117,31 @@ class SctrController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+	    try {
+		    $idempleado     = $request->input('idempleado');
+		    $numsctr        = $request->input('numsctr');
+		    $femision       = $request->input('femision');
+		    $fvencimiento   = $request->input('fvencimiento');
+		    $estado         = $request->input('estado');
+		    $usuario        = $request->input('id_user');
+		    $fecha          = $this->dateformt;
+
+
+
+		    $data   = array('idempleado' => $idempleado,
+		                    'numsctr' => $numsctr,
+		                    'femision' => $femision,
+		                    'fvencimiento' => $fvencimiento,
+		                    'estado' => $estado,
+		                    'usuario_actualizo' => $usuario,
+		                    'fecha_actualizo' => $fecha);
+
+		    DB::table('sctr')->where('idsctr',$id)->update($data);
+	    }catch (\Exception $e){
+		    return back()->with('success',$e->getMessage());
+	    }
+	    return redirect()->route('sctrPersonal', $idempleado)
+	                     ->with('success','Actualización Exitosa');
     }
 
     /**
@@ -94,6 +152,21 @@ class SctrController extends Controller
      */
     public function destroy($id)
     {
-        //
+	    try {
+
+		    $empleados = DB::table('sctr')->where('idsctr',$id)->first();
+
+		    DB::table('sctr')->where('idsctr',$id)->delete();
+
+		    $max = DB::table('sctr')->max('idsctr') + 1;
+		    DB::statement("ALTER TABLE sctr AUTO_INCREMENT =  $max");
+
+
+	    }catch (\Exception $e) {
+		    return back()->with('success',$e->getMessage());
+	    }
+	    return redirect()->route('sctrPersonal', $empleados->idempleado)
+	                     ->with('success', 'Registro eliminado correctamente');
+
     }
 }

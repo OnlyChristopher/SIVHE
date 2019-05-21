@@ -90,11 +90,11 @@
                                                                 @csrf
                                                                 @method('DELETE')
 
-                                                                <button id="btn-sctr-delete" type="submit" style="display: none;"
+                                                                <button id="btn-sctr-delete-{{$sctr->idsctr}}" type="submit" style="display: none;"
                                                                         class="btn btn-sm btn-icon btn-danger"><i
                                                                             class="fa fa-trash-alt"></i>
                                                                 </button>
-                                                                <button  type="button" data-click="swal-danger" data-backdrop="btn-sctr-delete"
+                                                                <button  type="button" data-click="swal-danger" data-backdrop="btn-sctr-delete-{{$sctr->idsctr}}"
                                                                          class="btn btn-icon btn-sm btn-danger" data-toggle="tooltip"
                                                                          data-container="body" data-title="Eliminar"><i
                                                                             class="fa fa-trash-alt"></i></button>

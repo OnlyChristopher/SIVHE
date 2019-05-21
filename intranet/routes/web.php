@@ -57,10 +57,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/personal/{id}/inducciones', 'InduccionesController@index')->name('induccionesPersonal');
 	Route::get('/personal/{id}/inducciones/create', 'InduccionesController@create')->name('induccionesPersonalCrear');
+	Route::get('/downloadfileInducciones/download/{id}','InduccionesController@file')->name('downloadfileInducciones');
+
 	Route::resource('/personal/inducciones', 'InduccionesController');
 
 	Route::get('/personal/{id}/emoa', 'EmoaController@index')->name('emoaPersonal');
 	Route::get('/personal/{id}/emoa/create', 'EmoaController@create')->name('emoaPersonalCrear');
+	Route::get('/downloadfileEmoa/download/{id}','EmoaController@file')->name('downloadfileEmoa');
+
 	Route::resource('/personal/emoa', 'EmoaController');
 
 	Route::get('/personal/{id}/operadores', 'OperadoresController@index')->name('operadoresPersonal');
