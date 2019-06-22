@@ -3,32 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use DB;
+use Illuminate\Support\Facades\DB;
 
-class UsuariosController extends Controller
+class ConsultasController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-	protected $dateformt;
-
-	public function __construct(){
-		$this->dateformt = date('Y-m-d');
-	}
     public function index()
     {
-	    $users = DB::table('users')
-	               ->join('profiles','profiles.codprofile','=','users.profile')
-		           ->join('clientes','clientes.id_cliente','=','users.idcliente')
-	               ->select('users.*','profiles.nameprofile','clientes.nombre_cliente')
-	               ->orderBy('users.id')
-	               ->paginate(10);
-
-	    return view('usuarios.index', ['users' => $users]);
+        $empleados = DB::table('empleados')
+			        ->leftJoin('tipo_documento', 'tipo_documento.idtipodoc', '=','empleados.idtipodoc')
+			        ->leftJoin('contratos', 'contratos.idempleado','=','empleados.idempleado')
+			        ->leftJoin('cargos', 'cargos.idcargo','=', 'contratos.idcargo')
+			        ->leftJoin('operadores','operadores.idoperador', '=','empleados.idoperador')
+			        ->leftJoin('emoa','emoa.idempleado','=','empleados.idempleado')
+			        ->leftJoin('sctr', 'sctr.idempleado','=','empleados.idempleado')
+			        ->leftJoin('induccion','induccion.idempleado','=', 'empleados.idempleado')
+	                ->select('empleados.*','empleados.idempleado as id','contratos.*','contratos.estado as estado_contrato',
+		                              'cargos.*','tipo_documento.*','operadores.*','emoa.*','emoa.femision as emoa_emision','emoa.fvencimiento as emoa_vencimiento',
+		                              'sctr.*','sctr.fvencimiento as sctr_vencimiento', 'induccion.*','induccion.fvencimiento as induccion_vencimiento')
+	                ->orderByDesc('empleados.idempleado')
+		            ->get();
+    	return view('consultas.index' , ['empleados' => $empleados]);
     }
 
     /**
@@ -38,10 +37,7 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        $clientes  = DB::table('clientes')->get();
-        $profiles  = DB::table('profiles')->get();
-
-        return view('usuarios.create', ['clientes' => $clientes, 'profiles' => $profiles]);
+        //
     }
 
     /**

@@ -17,6 +17,7 @@
     <!-- Fonts -->
 
     <link href="{{asset('assets/plugins/bootstrap/css/bootstrap.min.css')   }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.css')}}">
 
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
     <link href="{{asset('assets/plugins/jstree/dist/themes/default/style.min.css')}}" rel="stylesheet">
@@ -321,7 +322,7 @@
                                 <li><a href="{{action('PersonalController@index')}}"><i class="mdi mdi-menu-right"></i>Control de Personal</a></li>
                                 <li><a href="#"><i class="mdi mdi-menu-right"></i>Control de Camionetas</a></li>
                                 <li><a href="{{action('CargosController@index')}}"><i class="mdi mdi-menu-right"></i>Control de Cargos</a></li>
-
+                                <li><a href="{{action('ConsultasController@index')}}"><i class="mdi mdi-menu-right"></i>Consulta de Empleados</a></li>
                             </ul>
                         </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-worker"></i><span
@@ -335,6 +336,7 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{action('UsuariosController@index')}}"><i class="mdi mdi-menu-right"></i>Mantenimiento de Usuarios</a></li>
                                 <li><a href="#"><i class="mdi mdi-menu-right"></i>Mantenimiento de Clientes</a></li>
+                                <li><a href="{{action('OperadoresController@index')}}"><i class="mdi mdi-menu-right"></i>Mantenimiento de Operadores</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -392,10 +394,18 @@
     <script src="{{asset('assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{asset('assets/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}" charset="UTF-8"></script>
     <script src="{{asset('assets/plugins/sweetalert/sweetalert.min.js')}}"></script>
-    <!-- ============================================================== -->
-    <!-- Style switcher -->
-    <!-- ============================================================== -->
-    <script src="{{asset('assets/plugins/styleswitcher/jQuery.style.switcher.js')}}"></script>
+
+    <!-- This is data table -->
+    <script src="{{asset('assets/plugins/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <!-- start - This is for export functionality only -->
+    <script src="{{asset('assets/plugins/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js')}}"></script>
+    <script src="{{asset('assets/plugins/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js')}}"></script>
+    <!-- end - This is for export functionality only -->
     <script>
 
         //For validation with custom styles
@@ -417,7 +427,43 @@
                     }, false);
                 });
             }, false);
+
         })();
+
+        $('#table').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy','excel'
+            ],
+            "lengthChange" : false,
+            "ordering": false,
+            "info": true,
+            "bProcessing": true,
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
 
         $('.alert[data-auto-dismiss]').each(function (index, element) {
             var $element = $(element),
@@ -550,7 +596,7 @@
             }else{
                 alert('Seleccione carpeta principal');
             }
-        })
+        });
 
         console.log("%c Site developed with -   by  @OnlyChristopher " ,"background: #1e88e5; padding:5px; font-size: 12px; color: #ffffff");
 

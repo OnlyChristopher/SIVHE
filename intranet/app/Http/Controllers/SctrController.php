@@ -47,7 +47,7 @@ class SctrController extends Controller
      */
     public function create($id)
     {
-        $empleados = DB::table('sctr')->where('idsctr',$id)->first();
+        $empleados = DB::table('empleados')->where('idempleado',$id)->first();
         return view('sctr.create', ['empleados' => $empleados]);
     }
 

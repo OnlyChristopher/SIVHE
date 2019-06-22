@@ -17,20 +17,18 @@ class OperadoresController extends Controller
 	public function __construct(){
 		$this->dateformt = date('Y-m-d');
 	}
-    public function index($id)
+    public function index()
     {
 	    try {
-		    $empleados      = DB::table('empleados')->where('idempleado',$id)->first();
 		    $operadores     = DB::table('operadores')
 	                         ->leftJoin('clientes', 'operadores.id_cliente','clientes.id_cliente')
-		                     ->where('idempleado', $id)
 		                     ->select('operadores.*','clientes.nombre_cliente')
 			                 ->paginate(10);
 
 	    }catch (\Exception $e) {
 		    return back()->with('success',$e->getMessage());
 	    }
-	    return view('operadores.index', ['empleados' => $empleados, 'operadores' => $operadores]);
+	    return view('operadores.index', ['operadores' => $operadores]);
     }
 
     /**
@@ -38,13 +36,12 @@ class OperadoresController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
     	$clientes   = DB::table('clientes')->get();
-	    $empleados  = DB::table('empleados')->where('idempleado',$id)->first();
 
 
-	    return view('operadores.create', ['clientes' => $clientes, 'empleados' => $empleados]);
+	    return view('operadores.create', ['clientes' => $clientes]);
     }
 
     /**
@@ -56,18 +53,17 @@ class OperadoresController extends Controller
     public function store(Request $request)
     {
     	try{
-		    $idempleado     = $request->input('idempleado');
 		    $nombres        = $request->input('nombres');
 		    $apellidos      = $request->input('apellidos');
-		    $numcontrato    = $request->input('numcontrato');
+		    $codwo          = $request->input('codwo');
 		    $id_cliente     = $request->input('id_cliente');
 		    $usuario        = $request->input('id_user');
 		    $fecha          = $this->dateformt;
 
-		    $data = array('idempleado' => $idempleado,
+		    $data = array(
 		                  'nombres' => $nombres,
 		                  'apellidos' => $apellidos,
-		                  'numcontrato' => $numcontrato,
+		                  'codwo' => $codwo,
 		                  'id_cliente' => $id_cliente,
 		                  'usuario_creacion' => $usuario,
 		                  'fecha_creacion' => $fecha);
@@ -78,7 +74,7 @@ class OperadoresController extends Controller
 
 	    }
 
-	    return redirect()->route('operadoresPersonal', $idempleado)
+	    return redirect()->route('operadores.index')
 	                     ->with('success','Registro Exitoso');
 
     }
@@ -125,18 +121,17 @@ class OperadoresController extends Controller
     public function update(Request $request, $id)
     {
 	    try{
-		    $idempleado     = $request->input('idempleado');
 		    $nombres        = $request->input('nombres');
 		    $apellidos      = $request->input('apellidos');
-		    $numcontrato    = $request->input('numcontrato');
+		    $codwo          = $request->input('codwo');
 		    $id_cliente     = $request->input('id_cliente');
 		    $usuario        = $request->input('id_user');
 		    $fecha          = $this->dateformt;
 
-		    $data = array('idempleado' => $idempleado,
+		    $data = array(
 		                  'nombres' => $nombres,
 		                  'apellidos' => $apellidos,
-		                  'numcontrato' => $numcontrato,
+		                  'codwo' => $codwo,
 		                  'id_cliente' => $id_cliente,
 		                  'usuario_actualizo' => $usuario,
 		                  'fecha_actualizo' => $fecha);
@@ -147,7 +142,7 @@ class OperadoresController extends Controller
 
 	    }
 
-	    return redirect()->route('operadoresPersonal', $idempleado)
+	    return redirect()->route('operadores.index')
 	                     ->with('success','Actualización Exitosa');
     }
 
@@ -160,7 +155,6 @@ class OperadoresController extends Controller
     public function destroy($id)
     {
 	    try {
-	    	$empleados = DB::table('operadores')->where('idoperador',$id)->first();
 		    DB::table('operadores')->where('idoperador',$id)->delete();
 
 		    $max = DB::table('operadores')->max('idoperador') + 1;
@@ -169,7 +163,7 @@ class OperadoresController extends Controller
 		    return back()->with('success',$e->getMessage());
 
 	    }
-	    return redirect()->route('operadoresPersonal', $empleados->idempleado)
+	    return redirect()->route('operadores.index')
 	                     ->with('success', 'Registro eliminado correctamente');
     }
 }

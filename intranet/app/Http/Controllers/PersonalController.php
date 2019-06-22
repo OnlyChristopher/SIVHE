@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Storage;
 
 class PersonalController extends Controller
 {
@@ -21,7 +22,8 @@ class PersonalController extends Controller
     {
 	    $empleados =    DB::table('empleados')
 		                  ->leftJoin('tipo_documento', 'tipo_documento.idtipodoc', '=', 'empleados.idtipodoc')
-		                  ->select('empleados.*', 'tipo_documento.descripcion')
+		                  ->leftJoin('operadores', 'operadores.idoperador','=','empleados.idoperador')
+		                  ->select('empleados.*', 'tipo_documento.descripcion', 'operadores.nombres', 'operadores.apellidos')
 	                      ->orderBy('idempleado','desc')
 	                      ->paginate(10);
 	    return view('personal.index', ['empleados' => $empleados]);
@@ -34,8 +36,10 @@ class PersonalController extends Controller
      */
     public function create()
     {
-    	$tipodocumentos = DB::table('tipo_documento')->get();
-        return view('personal.create', ['tipodocumentos' => $tipodocumentos]);
+    	$tipodocumentos =   DB::table('tipo_documento')->get();
+    	$operadores =       DB::table('operadores')->get();
+    	$codwos =           DB::table('operadores')->select('codwo')->distinct()->get();
+        return view('personal.create', ['tipodocumentos' => $tipodocumentos, 'operadores' => $operadores, 'codwos' => $codwos]);
     }
 
     /**
@@ -55,8 +59,23 @@ class PersonalController extends Controller
         $fnacimiento    = $request->input('fnacimiento');
         $estadocivil    = $request->input('estadocivil');
         $direccion      = $request->input('direccion');
+		$idoperador     = $request->input('idoperador');
+		$codwo          = $request->input('codwo');
         $usuario_creacion = $request->input('id_user');
         $fecha_creacion = $this->dateformt;
+
+	    if($request->file('cv')){
+		    $cv  = $request->cv->getClientOriginalName();
+		    $id = DB::table('empleados')->max('idempleado');
+
+		    $id = $id + 1;
+
+		    $request->cv->storeAs('cv/empleados/'.$id.'/', $cv);
+	    }else{
+		    $cv = '';
+	    }
+
+
 
         $data = array(  'nombre1' => $nombre1,
 	                    'nombre2' => $nombre2,
@@ -67,6 +86,9 @@ class PersonalController extends Controller
 				        'fnacimiento' => $fnacimiento,
 				        'estadocivil' => $estadocivil,
 				        'direccion' => $direccion,
+				        'cv' => $cv,
+				        'idoperador' => $idoperador,
+				        'codwo' => $codwo,
 				        'usuario_creacion' => $usuario_creacion,
 				        'fecha_creacion' => $fecha_creacion);
 
@@ -99,8 +121,9 @@ class PersonalController extends Controller
     {
         $empleados = DB::table('empleados')->where('idempleado', $id)->first();
 	    $tipodocumentos = DB::table('tipo_documento')->get();
-
-        return view('personal.edit', ['empleados' => $empleados, 'tipodocumentos' => $tipodocumentos]);
+	    $operadores =       DB::table('operadores')->get();
+	    $codwos =           DB::table('operadores')->select('codwo')->distinct()->get();
+        return view('personal.edit', ['empleados' => $empleados, 'tipodocumentos' => $tipodocumentos, 'operadores' => $operadores, 'codwos' => $codwos]);
     }
 
     /**
@@ -121,8 +144,17 @@ class PersonalController extends Controller
 	    $fnacimiento    = $request->input('fnacimiento');
 	    $estadocivil    = $request->input('estadocivil');
 	    $direccion      = $request->input('direccion');
+	    $idoperador     = $request->input('idoperador');
+	    $codwo          = $request->input('codwo');
 	    $usuario_creacion = $request->input('id_user');
 	    $fecha_creacion = $this->dateformt;
+
+	    if($request->file('cv')){
+		    $cv  = $request->cv->getClientOriginalName();
+		    $request->cv->storeAs('cv/empleados/'.$id.'/', $cv);
+	    }else{
+		    $cv = $request->input('cv_old');
+	    }
 
 	    $data = array(  'nombre1' => $nombre1,
 	                    'nombre2' => $nombre2,
@@ -133,6 +165,9 @@ class PersonalController extends Controller
 	                    'fnacimiento' => $fnacimiento,
 	                    'estadocivil' => $estadocivil,
 	                    'direccion' => $direccion,
+	                    'cv' => $cv,
+	                    'idoperador' => $idoperador,
+	                    'codwo' => $codwo,
 	                    'usuario_actualizo' => $usuario_creacion,
 	                    'fecha_actualizo' => $fecha_creacion);
 
@@ -150,12 +185,28 @@ class PersonalController extends Controller
      */
     public function destroy($id)
     {
-	    DB::table('empleados')->where('idempleado', $id)->delete();
+	    try {
 
-	    $max = DB::table('empleados')->max('idempleado') + 1;
-	    DB::statement("ALTER TABLE empleados AUTO_INCREMENT =  $max");
+		    $max = DB::table( 'empleados' )->max( 'idempleado' ) + 1;
+		    DB::statement( "ALTER TABLE empleados AUTO_INCREMENT =  $max" );
+		    $dl = DB::table( 'empleados' )->where( 'idempleado', $id )->first();
+		    Storage::disk( 'local' )->deleteDirectory( 'cv/empleados/' . $dl->idempleado );
 
+		    DB::table( 'empleados' )->where( 'idempleado', $id )->delete();
+
+	    }catch (\Exception $e) {
+		    return back()->with('success',$e->getMessage());
+	    }
 	    return redirect()->route('personal.index')
 	                     ->with('success', 'Registro eliminado correctamente');
     }
+
+	public function file($id)
+	{
+		$path_storage = storage_path();
+
+		$dl = DB::table('empleados')->where('idempleado', $id)->first();
+		return response()->download("$path_storage/app/cv/empleados/$dl->idempleado/$dl->cv");
+
+	}
 }

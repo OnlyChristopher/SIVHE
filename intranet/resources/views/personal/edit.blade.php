@@ -125,10 +125,42 @@
                                                    placeholder="Ingrese Dirección" class="form-control " value="{{$empleados->direccion}}" required>
                                         </div>
                                     </div>
+                                    <div class="form-group row m-b-10">
+                                        <label class="col-md-3 text-md-right col-form-label" for="nombre">C.V</label>
+                                        <div class="col-md-6">
+                                            <input type="file" accept="application/pdf"  name="cv" class="custom-file-input" id="customFileLang" lang="es" >
+                                            <label class="custom-file-label form-control" for="customFileLang">Seleccionar Archivo</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row m-b-10">
+                                        <label class="col-md-3 text-md-right col-form-label"
+                                               for="id_areas">Operador</label>
+                                        <div class="col-md-6">
+                                            <select  name="idoperador" id="idoperador" class="form-control" required>
+                                                <option value="">Seleccione</option>
+                                                @foreach ($operadores as $operador)
+                                                    <option value="{{$operador->idoperador}}" {{$empleados->idoperador == $operador->idoperador ? 'selected' : ''}} >{{$operador->nombres}} {{$operador->apellidos}} </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
 
+                                    <div class="form-group row m-b-10">
+                                        <label class="col-md-3 text-md-right col-form-label"
+                                               for="id_areas">Codigo de Work Order</label>
+                                        <div class="col-md-6">
+                                            <select  name="codwo" id="codwo" class="form-control" required>
+                                                <option value="">Seleccione</option>
+                                                @foreach ($codwos as $codwo)
+                                                    <option value="{{$codwo->codwo}}" {{$empleados->codwo == $codwo->codwo ? 'selected' : ''}} >{{$codwo->codwo}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
 
 
                                     <input type="hidden" name="id_user" id="id_user" value="{{ Auth::user()->id }}">
+                                    <input type="hidden" name="cv_old" id="cv_old" value="{{$empleados->cv}}">
 
                                     <div class="form-group row m-b-10">
                                         <label class="col-md-3 text-md-right col-form-label"></label>

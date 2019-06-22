@@ -26,9 +26,7 @@
                 </div>
                 <div class="col-md-7 col-4 align-self-center">
                     <div class="text-right">
-
-
-                    @if( Auth::user()->profile == 1|| Auth::user()->profile == 2)
+                        @if( Auth::user()->profile == 1|| Auth::user()->profile == 2)
                             @if ($proyectos->carpetas == 0)
                                 <button type="button"
                                         data-href="{{route('proyectos.edit',$proyectos->id_proyecto)}}"
@@ -48,17 +46,14 @@
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Carpetas
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
                                         <a class="dropdown-item" href="{{route('carpetasProyectosCreate',$proyectos->id_proyecto)}}">Crear Sub Carpetas</a>
-
                                         @if(count($carpetas) > 0)
                                             <a class="dropdown-item edit-folder" href="#">Editar Sub Carpeta</a>
-
                                             <input type="hidden" id="id_carpetasecundaria">
                                             <a class="dropdown-item detail-folder" href="#">Ver Sub Carpetas</a>
                                             <input type="hidden" id="id_carpetaprincipal">
@@ -108,7 +103,6 @@
             <!-- ============================================================== -->
             <!-- Right sidebar -->
             <!-- ============================================================== -->
-
         </div>
         <!-- ============================================================== -->
         <!-- End Container fluid  -->
@@ -126,5 +120,4 @@
     <!-- ============================================================== -->
     <!-- End Page wrapper  -->
     <!-- ============================================================== -->
-
 @endsection

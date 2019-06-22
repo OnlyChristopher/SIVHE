@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('select-ajax', ['as'=>'select-ajax','uses'=>'CarpetasController@carpetasSecundarias']);
 
 	Route::resource('personal', 'PersonalController');
+	Route::get('/downloadCv/download/{id}','PersonalController@file')->name('downloadCv');
 
 	Route::get('/personal/{id}/contrato', 'ContratosController@index')->name('contratoPersonal');
 	Route::get('/personal/{id}/contrato/create', 'ContratosController@create')->name('contratoPersonalCrear');
@@ -67,12 +68,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('/personal/emoa', 'EmoaController');
 
-	Route::get('/personal/{id}/operadores', 'OperadoresController@index')->name('operadoresPersonal');
-	Route::get('/personal/{id}/operadores/create', 'OperadoresController@create')->name('operadoresPersonalCrear');
-	Route::resource('/personal/operadores', 'OperadoresController');
+	Route::resource('operadores', 'OperadoresController');
+
 
 	Route::resource('cargos', 'CargosController');
 
-	Route::resource('usuarioscarpetasProyectosEdit', 'UsuariosController');
+	Route::resource('usuarios', 'UsuariosController');
+
+	Route::resource('consultas', 'ConsultasController');
+
 
 });

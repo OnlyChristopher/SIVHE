@@ -49,7 +49,7 @@
                                     <strong>{{$message}}</strong>
                                 </div>
                             @endif
-                            <div class="table">
+                            <div class="table-responsive">
                                 @if(count($empleados))
                                     <table class="table table-hover m-b-10">
                                         <thead>
@@ -63,6 +63,8 @@
                                             <th>Fecha Nacimiento</th>
                                             <th>Estado Civil</th>
                                             <th>Dirección</th>
+                                            <th>C.V</th>
+                                            <th>Operador</th>
                                             <th>Acciones</th>
                                         </tr>
                                         </thead>
@@ -78,19 +80,29 @@
                                                 <td nowrap>{{$empleado->estadocivil}}</td>
                                                 <td nowrap>{{$empleado->direccion}}</td>
                                                 <td nowrap>
+                                                    @if($empleado->cv)
+                                                        <a href="{{ route('downloadCv', $empleado->idempleado)}}"
+                                                           title=""
+                                                           class="btn btn-warning btn-icon btn-sm" data-toggle="tooltip" data-container="body" data-title="Descargas">
+                                                            <i class="fa fa-file-pdf"></i>
+                                                        </a>
+                                                    @endif
+                                                </td>
+                                                <td nowrap>{{$empleado->nombres}} {{$empleado->apellidos}}</td>
+                                                <td nowrap>
                                                     <form action="{{ route('personal.destroy', $empleado->idempleado) }}"
                                                           method="post">
                                                         @if( Auth::user()->profile == 1|| Auth::user()->profile == 2)
                                                             <div class="btn-group">
 
-                                                            <button type="button" class="btn btn-sm btn-icon btn-warning"
-                                                               data-href="{{route('personal.edit',$empleado->idempleado)}}"
-                                                                   data-toggle="tooltip" data-container="body"
-                                                               data-id-="{{$empleado->idempleado}}"
-                                                               data-title="Editar"><i
-                                                                        class="fa fa-pencil-alt"></i></button>
-                                                            @csrf
-                                                            @method('DELETE')
+                                                                <button type="button" class="btn btn-sm btn-icon btn-warning"
+                                                                        data-href="{{route('personal.edit',$empleado->idempleado)}}"
+                                                                        data-toggle="tooltip" data-container="body"
+                                                                        data-id-="{{$empleado->idempleado}}"
+                                                                        data-title="Editar"><i
+                                                                            class="fa fa-pencil-alt"></i></button>
+                                                                @csrf
+                                                                @method('DELETE')
                                                                 <button type="button"  data-click="swal-danger" data-backdrop="btn-personal-delete-{{$empleado->idempleado}}"
                                                                         class="btn btn-icon btn-sm btn-danger" data-toggle="tooltip"
                                                                         data-container="body" data-title="Eliminar"><i
@@ -108,7 +120,6 @@
                                                                     <a class="dropdown-item" href="{{route('sctrPersonal', $empleado->idempleado)}}">SCTR</a>
                                                                     <a class="dropdown-item" href="{{route('induccionesPersonal', $empleado->idempleado)}}">Inducción</a>
                                                                     <a class="dropdown-item" href="{{route('emoaPersonal', $empleado->idempleado)}}">EMOA</a>
-                                                                    <a class="dropdown-item" href="{{route('operadoresPersonal', $empleado->idempleado)}}">Operador</a>
                                                                 </div>
 
                                                             </div>

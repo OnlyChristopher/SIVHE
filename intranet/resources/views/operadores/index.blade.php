@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-md-5 col-8 align-self-center">
                     <div class="text-right">
-                        <button type="button" data-href="{{route('operadoresPersonalCrear', $empleados->idempleado)}}" class="btn btn-sm waves-effect waves-light btn-info"> Crear
+                        <button type="button" data-href="{{route('operadores.create')}}" class="btn btn-sm waves-effect waves-light btn-info"> Crear
                             Nuevo Operador
                         </button>
                     </div>
@@ -43,7 +43,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Operador de {{$empleados->nombre1}} {{$empleados->nombre2}} {{$empleados->apepaterno}} {{$empleados->apematerno}}</h4>
+                            <h4 class="card-title">Operadores</h4>
                             @if ($message = Session::get('success'))
                                 <div class="alert alert-success fade show" data-auto-dismiss="5000">
                                     <span class="close" data-dismiss="alert">×</span>
@@ -58,7 +58,7 @@
                                             <th><b>No.</b></th>
                                             <th>Nombres</th>
                                             <th>Apellidos</th>
-                                            <th>Num Contratro</th>
+                                            <th>Work Order</th>
                                             <th>Cliente</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -68,7 +68,7 @@
                                                 <td>{{$operador->idoperador}}</td>
                                                 <td nowrap>{{$operador->nombres}}</td>
                                                 <td nowrap>{{$operador->apellidos}}</td>
-                                                <td nowrap>{{$operador->numcontrato}}</td>
+                                                <td nowrap>{{$operador->codwo}}</td>
                                                 <td nowrap>{{$operador->nombre_cliente}}</td>
                                                 <td nowrap>
                                                     <form action="{{ route('operadores.destroy', $operador->idoperador) }}"

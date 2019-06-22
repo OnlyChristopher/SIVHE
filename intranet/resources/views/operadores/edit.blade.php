@@ -46,6 +46,7 @@
                                 <form action="{{route('operadores.update',$operadores->idoperador)}}" method="post" enctype="multipart/form-data"
                                       class="needs-validation" autocomplete="off" novalidate>
                                     @csrf
+                                    @method('PUT')
                                     <div class="form-group row m-b-10">
                                         <label class="col-md-3 text-md-right col-form-label"
                                                for="cod_proyecto">Nombres</label>
@@ -64,10 +65,10 @@
                                     </div>
 
                                     <div class="form-group row m-b-10">
-                                        <label class="col-md-3 text-md-right col-form-label" for="nombre_proyecto">Número Contrato</label>
+                                        <label class="col-md-3 text-md-right col-form-label" for="nombre_proyecto">Work Order</label>
                                         <div class="col-md-6">
-                                            <input type="text" name="numcontrato" id="numcontrato"
-                                                   placeholder="Número Contrato" class="form-control" value="{{$operadores->numcontrato}}" required>
+                                            <input type="text" name="codwo" id="codwo"
+                                                   placeholder="Work Order" class="form-control" value="{{$operadores->codwo}}" required>
                                         </div>
                                     </div>
 
@@ -84,7 +85,6 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="id_user" id="id_user" value="{{ Auth::user()->id }}">
-                                    <input type="hidden" name="idempleado" id="idempleado" value="{{ $operadores->idempleado }}">
 
 
                                     <div class="form-group row m-b-10">

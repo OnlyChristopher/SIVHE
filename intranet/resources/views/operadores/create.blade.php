@@ -64,10 +64,10 @@
                                     </div>
 
                                     <div class="form-group row m-b-10">
-                                        <label class="col-md-3 text-md-right col-form-label" for="nombre_proyecto">Número Contrato</label>
+                                        <label class="col-md-3 text-md-right col-form-label" for="nombre_proyecto">Work Order Contrato</label>
                                         <div class="col-md-6">
-                                            <input type="text" name="numcontrato" id="numcontrato"
-                                                   placeholder="Número Contrato" class="form-control" required>
+                                            <input type="text" name="codwo" id="codwo"
+                                                   placeholder="Work Order" class="form-control" required>
                                         </div>
                                     </div>
 
@@ -84,7 +84,6 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="id_user" id="id_user" value="{{ Auth::user()->id }}">
-                                    <input type="hidden" name="idempleado" id="idempleado" value="{{ $empleados->idempleado }}">
 
 
                                     <div class="form-group row m-b-10">
