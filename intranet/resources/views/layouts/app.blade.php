@@ -206,19 +206,19 @@
                     </li>
                 
                 @endif @if(Auth::user()->profile == 1 || Auth::user()->profile == 2 || Auth::user()->profile == 3 || Auth::user()->profile == 4)
-                    <li class="has-sub active @yield('clase-open-documentos') @yield('clase-active-documentos')">
+                    <li class="has-sub active @yield('clase-open-vehiculos') @yield('clase-active-documentos')">
                         <a href="javascript:;">
                             <b class="caret"></b>
                             <i class="fa fa-align-left"></i>
                             <span>Control de Vehiculos</span>
                         </a>
                         <ul class="sub-menu" style="@yield('clase-open-documentos-block')">
-                            <li class="@yield('clase-active-plantillas')"><a
-                                        href="#">{{ __('Registro de Conductores') }}</a>
+                            <li class="@yield('clase-active-conductores-registro')"><a
+                                        href="{{route('conductores.index')}}">{{ __('Registro de Conductores') }}</a>
                             </li>
                             
-                            <li class="@yield('clase-active-procedimientos')"><a
-                                        href="#">{{ __('Registro de Vehículos') }}</a>
+                            <li class="@yield('clase-active-vehiculos-registro')"><a
+                                        href="{{route('vehiculos.index')}}">{{ __('Registro de Vehículos') }}</a>
                             </li>
                             
                             <li class="@yield('clase-active-procedimientos')"><a

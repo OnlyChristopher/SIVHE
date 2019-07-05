@@ -73,6 +73,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('administracion/cargos', 'CargosController');
 
+	Route::resource('conductores', 'ConductoresController');
+	Route::resource('vehiculos', 'VehiculosController');
 
 
 });
