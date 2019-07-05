@@ -25,8 +25,7 @@
                     </ol>
                 </div>
                 <div class="col-md-7 col-4 align-self-center">
-                    <div class="text-right">
-                        @if( Auth::user()->profile == 1|| Auth::user()->profile == 2)
+                    <div class="text-right">                    @if( Auth::user()->profile == 1|| Auth::user()->profile == 2)
                             @if ($proyectos->carpetas == 0)
                                 <button type="button"
                                         data-href="{{route('proyectos.edit',$proyectos->id_proyecto)}}"
@@ -46,6 +45,7 @@
                                         @endif
                                     </div>
                                 </div>
+
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Carpetas

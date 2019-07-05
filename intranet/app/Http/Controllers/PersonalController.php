@@ -25,7 +25,7 @@ class PersonalController extends Controller
 		                  ->leftJoin('operadores', 'operadores.idoperador','=','empleados.idoperador')
 		                  ->select('empleados.*', 'tipo_documento.descripcion', 'operadores.nombres', 'operadores.apellidos')
 	                      ->orderBy('idempleado','desc')
-	                      ->paginate(10);
+	                      ->get();
 	    return view('personal.index', ['empleados' => $empleados]);
     }
 
@@ -187,12 +187,12 @@ class PersonalController extends Controller
     {
 	    try {
 
-		    $max = DB::table( 'empleados' )->max( 'idempleado' ) + 1;
-		    DB::statement( "ALTER TABLE empleados AUTO_INCREMENT =  $max" );
 		    $dl = DB::table( 'empleados' )->where( 'idempleado', $id )->first();
 		    Storage::disk( 'local' )->deleteDirectory( 'cv/empleados/' . $dl->idempleado );
 
 		    DB::table( 'empleados' )->where( 'idempleado', $id )->delete();
+		    $max = DB::table( 'empleados' )->max( 'idempleado' ) + 1;
+		    DB::statement( "ALTER TABLE empleados AUTO_INCREMENT =  $max" );
 
 	    }catch (\Exception $e) {
 		    return back()->with('success',$e->getMessage());

@@ -13,22 +13,22 @@ class UsuariosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
 	protected $dateformt;
 
 	public function __construct(){
 		$this->dateformt = date('Y-m-d');
 	}
+
     public function index()
     {
 	    $users = DB::table('users')
 	               ->join('profiles','profiles.codprofile','=','users.profile')
-		           ->join('clientes','clientes.id_cliente','=','users.idcliente')
-	               ->select('users.*','profiles.nameprofile','clientes.nombre_cliente')
-	               ->orderBy('users.id')
-	               ->paginate(10);
+		           ->join('positions','positions.id','=','users.position')
+		           ->select('users.*','profiles.nameprofile','positions.nombre')
+		           ->orderBy('users.id')
+		           ->get();
 
-	    return view('usuarios.index', ['users' => $users]);
+	    return view('administracion.usuarios.index', ['users' => $users]);
     }
 
     /**
@@ -38,10 +38,11 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        $clientes  = DB::table('clientes')->get();
-        $profiles  = DB::table('profiles')->get();
+        $positions  =   DB::table('positions')->get();
+    	$profiles   =   DB::table('profiles')->get();
+    	$clientes   =   DB::table('clientes')->get();
 
-        return view('usuarios.create', ['clientes' => $clientes, 'profiles' => $profiles]);
+        return view('administracion.usuarios.create', ['positions' => $positions, 'profiles' => $profiles, 'clientes' => $clientes]);
     }
 
     /**
@@ -52,7 +53,32 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $firstname      =   $request->input('firstname');
+        $lastname       =   $request->input('lastname');
+        $email          =   $request->input('email');
+        $password       =   $request->input('password');
+        $idcliente      =   $request->input('cliente');
+        $dni            =   $request->input('dni');
+        $position       =   $request->input('position');
+        $profile        =   $request->input('profile');
+        $created_user   =   $request->input('created_user');
+        $created_at     =   $this->dateformt;
+
+        $data   = array('firstname'     =>  $firstname,
+	                    'lastname'      =>  $lastname,
+                        'email'         =>  $email,
+	                    'password'      =>  Hash::make($password),
+                        'idcliente'     =>  $idcliente,
+	                    'dni'           =>  $dni,
+	                    'position'      =>  $position,
+	                    'profile'       =>  $profile,
+	                    'created_user'  =>  $created_user,
+	                    'created_at'    =>  $created_at);
+
+        DB::table('users')->insert($data);
+
+	    return redirect()->route('usuarios.index')
+	                     ->with('success', 'Registro Exitoso');
     }
 
     /**
@@ -74,7 +100,13 @@ class UsuariosController extends Controller
      */
     public function edit($id)
     {
-        //
+	    $positions  =   DB::table('positions')->get();
+	    $profiles   =   DB::table('profiles')->get();
+	    $clientes   =   DB::table('clientes')->get();
+
+	    $users      =   DB::table('users')->where('id',$id)->first();
+
+	    return view('administracion.usuarios.edit', ['positions' => $positions, 'profiles' => $profiles, 'clientes' => $clientes, 'users' => $users]);
     }
 
     /**
@@ -86,7 +118,32 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+	    $firstname      =   $request->input('firstname');
+	    $lastname       =   $request->input('lastname');
+	    $email          =   $request->input('email');
+//	    $password       =   $request->input('password');
+	    $idcliente      =   $request->input('cliente');
+	    $dni            =   $request->input('dni');
+	    $position       =   $request->input('position');
+	    $profile        =   $request->input('profile');
+	    $created_user   =   $request->input('created_user');
+	    $created_at     =   $this->dateformt;
+
+	    $data   = array('firstname'     =>  $firstname,
+	                    'lastname'      =>  $lastname,
+	                    'email'         =>  $email,
+//	                    'password'      =>  Hash::make($password),
+	                    'idcliente'     =>  $idcliente,
+	                    'dni'           =>  $dni,
+	                    'position'      =>  $position,
+	                    'profile'       =>  $profile,
+	                    'updated_user'  =>  $created_user,
+	                    'updated_at'    =>  $created_at);
+
+	    DB::table('users')->where('id',$id)->update($data);
+
+	    return redirect()->route('usuarios.index')
+	                     ->with('success', 'Actualización Exitosa');
     }
 
     /**
@@ -97,6 +154,8 @@ class UsuariosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('users')->where('id', $id)->delete();
+	    return redirect()->route('usuarios.index')
+                         ->with('success', 'Registro eliminado correctamente');
     }
 }

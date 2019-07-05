@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class CargosController extends Controller
 {
@@ -19,9 +19,10 @@ class CargosController extends Controller
 	}
     public function index()
     {
-        $cargos = DB::table('cargos')->paginate(10);
 
-        return view('cargos.index', ['cargos' => $cargos]);
+    	$cargos = DB::table('positions')->get();
+
+    	return view('administracion.cargos.index', ['cargos' => $cargos]);
     }
 
     /**
@@ -31,7 +32,7 @@ class CargosController extends Controller
      */
     public function create()
     {
-        return view('cargos.create');
+        return view('administracion.cargos.create');
     }
 
     /**
@@ -43,17 +44,16 @@ class CargosController extends Controller
     public function store(Request $request)
     {
         $nombre             = $request->input('nombre');
-        $usuario_creacion   = $request->input('id_user');
-        $fecha_creacion     = $this->dateformt;
+        $usuario_creacion   = $request->input('usuario_creacion');
 
-        $data = array(  'nombre'            => $nombre,
-	                    'usuario_creacion'  => $usuario_creacion,
-	                    'fecha_creacion'    => $fecha_creacion);
+        $data = array( 'nombre' => $nombre,
+                       'usuario_creacion' => $usuario_creacion,
+                       'fecha_creacion' => $this->dateformt);
 
-	    DB::table('cargos')->insert($data);
+	    DB::table('positions')->insert($data);
 
-	    return redirect()->route('cargos.index')
-	                     ->with('success','Registro Exitoso');
+		return redirect()->route('cargos.index')
+	                 ->with('success','Registro Exitoso');
     }
 
     /**
@@ -75,9 +75,8 @@ class CargosController extends Controller
      */
     public function edit($id)
     {
-        $cargos = DB::table('cargos')->where('idcargo',$id)->first();
-
-        return view('cargos.edit', ['cargos' => $cargos]);
+        $cargos = DB::table('positions')->where('id', $id)->first();
+    	return view ('administracion.cargos.edit', ['cargos' => $cargos]);
     }
 
     /**
@@ -90,17 +89,16 @@ class CargosController extends Controller
     public function update(Request $request, $id)
     {
 	    $nombre             = $request->input('nombre');
-	    $usuario_creacion   = $request->input('id_user');
-	    $fecha_creacion     = $this->dateformt;
+	    $usuario_creacion   = $request->input('usuario_creacion');
 
-	    $data = array('nombre' => $nombre,
-	                  'usuario_actualizo' => $usuario_creacion,
-	                  'fecha_actualizo' => $fecha_creacion);
+	    $data = array( 'nombre' => $nombre,
+	                   'usuario_actualizo' => $usuario_creacion,
+	                   'fecha_actualizo' => $this->dateformt);
 
-	    DB::table('cargos')->where('idcargo',$id)->update($data);
+	    DB::table('positions')->where('id',$id)->update($data);
 
 	    return redirect()->route('cargos.index')
-	                     ->with('success','Actualización Exitosa');
+	                     ->with('success','Registro Modificado');
     }
 
     /**
@@ -111,8 +109,8 @@ class CargosController extends Controller
      */
     public function destroy($id)
     {
-	    DB::table('cargos')->where('idcargo', $id)->delete();
+	    DB::table('positions')->where('id', $id)->delete();
 	    return redirect()->route('cargos.index')
-	                     ->with('success', 'Registro eliminado correctamente');
+	                     ->with('success', 'Registro Eliminado');
     }
 }
