@@ -31,7 +31,7 @@
                     </div>
                 @endif
 
-                <table class="table table-striped m-b-0">
+                <table class="table table-hover m-b-0">
                     <thead>
                         <tr>
                             <th><b>No.</b></th>

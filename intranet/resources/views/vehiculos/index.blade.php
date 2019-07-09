@@ -19,7 +19,7 @@
     <div class="panel panel-inverse">
         <div class="panel-heading">
             <div class="panel-heading-btn">
-                <a  class="btn btn-primary btn-xs" href="{{ route('conductores.create') }}">Crear nuevo vehiculo</a>
+                <a  class="btn btn-primary btn-xs" href="{{ route('vehiculos.create') }}">Crear nuevo vehiculo</a>
             </div>
             <h4 class="panel-title">Registro de Vehículos</h4>
         </div>
@@ -32,7 +32,7 @@
             @endif
             <div class="table-responsive">
                 @if(count($vehiculos))
-                    <table class="table nowrap table-striped m-b-0">
+                    <table class="table nowrap table-hover m-b-0">
                         <thead>
                         <tr>
                             <th><b>No.</b></th>
@@ -62,19 +62,19 @@
                                 <td>{{$vehiculo->estado}}</td>
                                 <td>{{$vehiculo->tarjetaprop}}</td>
                                 <td>
-                                    <form action="{{ route('vehiculos.destroy', $cargo->id) }}" method="post">
+                                    <form action="{{ route('vehiculos.destroy', $vehiculo->id_vehiculo) }}" method="post">
                                         <a class="btn btn-icon btn-sm btn-warning"
-                                           href="{{route('vehiculos.edit',$cargo->id)}}"
-                                           data-toggle="tooltip" data-container="body" data-id-="{{$cargo->id}}" data-title="Editar"><i
+                                           href="{{route('vehiculos.edit',$vehiculo->id_vehiculo)}}"
+                                           data-toggle="tooltip" data-container="body" data-id-="{{$vehiculo->id_vehiculo}}" data-title="Editar"><i
                                                     class="fa fa-pencil-alt"></i></a>
                                         @csrf
                                         @method('DELETE')
-                                        <a href="javascript:;" data-click="swal-danger-conductores" data-id="{{$cargo->id}}"
+                                        <a href="javascript:;" data-click="swal-danger-vehiculos" data-id="{{$vehiculo->id_vehiculo}}"
                                            class="btn btn-icon btn-sm btn-danger" data-toggle="tooltip"
                                            data-container="body" data-title="Eliminar"><i
                                                     class="fa fa-trash-alt"></i></a>
-                                        <button id="btn-conductores-delete" style="display: none;"  type="submit"
-                                                class="btn btn-icon btn-sm btn-danger" data-toggle="tooltip" data-container="body" data-id-="{{$cargo->id}}" data-title="Eliminar"><i
+                                        <button id="btn-vehiculos-delete" style="display: none;"  type="submit"
+                                                class="btn btn-icon btn-sm btn-danger" data-toggle="tooltip" data-container="body" data-id-="{{$vehiculo->id_vehiculo}}" data-title="Eliminar"><i
                                                     class="fa fa-trash-alt"></i>
                                         </button>
                                     </form>

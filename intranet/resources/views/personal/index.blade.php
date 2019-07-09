@@ -13,8 +13,6 @@
     <!-- begin page-header -->
     <h1 class="page-header">Registro de Empleados </h1>
     <!-- end page-header -->
-    
-    <!-- begin panel -->
     <!-- begin panel -->
     <div class="panel panel-inverse">
         <div class="panel-heading">
@@ -25,6 +23,12 @@
         </div>
         <div class="panel-body">
             <div class="table-responsive">
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success fade show" data-auto-dismiss="5000">
+                        <span class="close" data-dismiss="alert">×</span>
+                        <strong>{{$message}}</strong>
+                    </div>
+                @endif
                 @if(count($empleados))
                     <table class="table table-hover m-b-10">
                         <thead>

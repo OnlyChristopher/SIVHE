@@ -25,7 +25,8 @@ class ConductoresController extends Controller
      */
     public function create()
     {
-        //
+        $tipoDocumentos = DB::table('tipo_documento')->get();
+        return view('conductores.create', ['tipoDocs' => $tipoDocumentos]);
     }
 
     /**

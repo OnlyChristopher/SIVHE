@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('proyectos/carpetas/file/{id}', 'CarpetasController@file')->name('fileCarpetasProyectosCreate');
 	Route::get('proyectos/carpetas/file/show/{id}', 'CarpetasController@show')->name('fileCarpetasProyectosShow');
 	Route::post('proyectos/carpetas/file', 'CarpetasController@filestore')->name('fileStore');
+	Route::post('proyectos/carpetas/filestorepreview', 'CarpetasController@filestorepreview')->name('fileStorePreview');
 	Route::get('file/carpetas/download/{id}','CarpetasController@downloadFile')->name('downloadArchiveProyectos');
 	Route::post('select-ajax', ['as'=>'select-ajax','uses'=>'CarpetasController@carpetasSecundarias']);
 

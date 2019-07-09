@@ -405,6 +405,41 @@ class CarpetasController extends Controller
 		               ->get();
 		return view('proyectos.carpetas.file', ['proyectos' => $proyectos, 'carpetas' => $carpetas]);
 	}
+	public function filestorepreview(Request $request){
+		try{
+			$id_carpetaprincipal    = $request->input('id_carpetaprincipal');
+			$id_carpetasecundaria   = $request->input('id_carpetasecundaria');
+			$id_proyecto            = $request->input('id_proyecto');
+
+			$carpetaprincipal = DB::table('carpetas_principales')
+			                      ->where('id','=',$id_carpetaprincipal)
+			                      ->first();
+			$carpetasecundaria = DB::table('carpetas_secundarias')
+			                       ->where('id','=',$id_carpetasecundaria)
+			                       ->first();
+
+			if($id_carpetasecundaria){
+				foreach ($request->file('files') as $file){
+					$name   =   $file->getClientOriginalName();
+					$file->storeAs('proyecto/'.$id_proyecto.'/'.$carpetaprincipal->nombre.'/'.$carpetasecundaria->nombre, $name);
+				}
+				return 'Subio el Archivo, ahora guarde el registro';
+
+			}else{
+				foreach ($request->file('files') as $file){
+					$name   =   $file->getClientOriginalName();
+					$file->storeAs('proyecto/'.$id_proyecto.'/'.$carpetaprincipal->nombre.'/', $name);
+				}
+				return 'Subio el Archivo, ahora guarde el registro';
+
+			}
+
+		}catch (\Exception $e) {
+			return back()->with('success',$e->getMessage());
+		}
+
+		return 'Subio el Archivo, ahora guarde el registro';
+	}
 
 	public function filestore(Request $request)
 	{

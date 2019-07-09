@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Crear Personal | Administración | SIVHE')
-@section('style', 'fix-header fix-sidebar card-no-border')
-
+@section('clase-active-empleados','active')
+@section('clase-block-registro','block')
+@section('clase-active-registro','active')
 @section('content')
     <!-- ============================================================== -->
     <!-- ============================================================== -->
