@@ -198,6 +198,24 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="has-sub active @yield('clase-open-ingenieria') @yield('clase-active-ingenieria')">
+                        <a href="javascript:;">
+                            <b class="caret"></b>
+                            <i class="fa fa-th-large"></i>
+                            <span>Ingenieria y Proyectos</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="@yield('clase-active-impuestos')">
+                                <a href="#">{{ __('Obras por Impuesto') }}</a>
+                            </li>
+                
+                            @if(Auth::user()->profile == 1 || Auth::user()->profile == 2 || Auth::user()->profile == 4)
+                                <li class="@yield('clase-active-antamina')">
+                                    <a href="#">{{ __('Obras por Antamina') }}</a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
                 
                 @endif @if(Auth::user()->profile == 1 || Auth::user()->profile == 4)
                     
