@@ -19,29 +19,33 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
+	Route::get('administracion/usuarios', 'UsuariosController@index');
+	Route::resource('administracion/usuarios', 'UsuariosController');
+
+
 	Route::resource('proyectos', 'ProyectosController');
-	Route::get('/downloadfileProyectos/download/{id}','ProyectosController@file')->name('downloadfileProyectos');
+    Route::get('/fileproyectos/download/{id}','ProyectosController@file')->name('downloadfileProyectos');
 
-	Route::get('proyectos/{id}/carpetas/', 'CarpetasController@index')->name('carpetasProyectos');
-	Route::get('carpetas/file/{id}', 'CarpetasController@files')->name('fileCarpetasProyectosCreate');
-	Route::get('proyectos/{proyecto}/carpetas/{id?}/folder/show/', 'CarpetasController@listfolder')->name('carpetasProyectosList');
-	Route::get('carpetas/folder/edit/{id}', 'CarpetasController@edit')->name('carpetasProyectosEdit');
+	Route::resource('actividades', 'ActividadesController');
 
-	Route::put('carpetas/folder/edit/{id}', 'CarpetasController@update')->name('carpetasProyectosUpdate');
+	Route::resource('temporales', 'TemporalesController');
 
-	Route::delete('carpetas/folder/delete/{id}', 'CarpetasController@destroyfolder')->name('carpetasProyectosDelete');
-	Route::get('carpetas/file/{id}', 'CarpetasController@files')->name('fileCarpetasProyectosCreate');
-	Route::get('carpetas/{id}/file/show/', 'CarpetasController@show')->name('fileCarpetasProyectosShow');
-	Route::delete('carpetas/{id}', 'CarpetasController@destroy')->name('carpetas.destroy');
+	Route::resource('clientes', 'ClientesController');
 
-
-
-	Route::post('carpetas/file', 'CarpetasController@filestore')->name('fileStore');
-	Route::post('carpetas/create', 'CarpetasController@store')->name('folderStore');
-	Route::get('carpetas/create/{id}', 'CarpetasController@create')->name('carpetasProyectosCreate');
+	Route::resource('carpetas', 'CarpetasController');
+	Route::get('proyectos/carpetas/{id}', 'CarpetasController@index')->name('carpetasProyectos');
+    Route::get('proyectos/carpetas/create/{id}', 'CarpetasController@create')->name('carpetasProyectosCreate');
+    Route::get('proyectos/carpetas/{proyecto}/folder/show/{id?}', 'CarpetasController@listfolder')->name('carpetasProyectosList');
+	Route::get('proyectos/carpetas/folder/edit/{id}', 'CarpetasController@edit')->name('carpetasProyectosEdit');
+	Route::delete('proyectos/carpetas/folder/delete/{id}', 'CarpetasController@destroyfolder')->name('carpetasProyectosDelete');
+	Route::get('proyectos/carpetas/file/{id}', 'CarpetasController@file')->name('fileCarpetasProyectosCreate');
+	Route::get('proyectos/carpetas/file/show/{id}', 'CarpetasController@show')->name('fileCarpetasProyectosShow');
+	Route::post('proyectos/carpetas/file', 'CarpetasController@filestore')->name('fileStore');
+	Route::post('proyectos/carpetas/filestorepreview', 'CarpetasController@filestorepreview')->name('fileStorePreview');
 	Route::get('file/carpetas/download/{id}','CarpetasController@downloadFile')->name('downloadArchiveProyectos');
 	Route::post('select-ajax', ['as'=>'select-ajax','uses'=>'CarpetasController@carpetasSecundarias']);
 
@@ -68,14 +72,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('/personal/emoa', 'EmoaController');
 
-	Route::resource('operadores', 'OperadoresController');
+	Route::resource('administracion/cargos', 'CargosController');
+
+	Route::resource('conductores', 'ConductoresController');
+	Route::resource('vehiculos', 'VehiculosController');
 
 
-	Route::resource('cargos', 'CargosController');
-
-	Route::resource('usuarios', 'UsuariosController');
+});
 
 	Route::resource('consultas', 'ConsultasController');
 
 
-});
