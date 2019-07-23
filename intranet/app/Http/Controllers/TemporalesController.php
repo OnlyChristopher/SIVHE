@@ -148,7 +148,10 @@ class TemporalesController extends Controller
 	public function file($id)
 	{
 		$dl = DB::table('temporales')->where('id_temporal', $id)->first();
-		return response()->download("../intranet/storage/app/temporales/$dl->usuario_carga/$dl->documento");
+		$path = storage_path();
+
+
+		return response()->download("$path/app/temporales/$dl->usuario_carga/$dl->documento");
 	}
     /**
      * Update the specified resource in storage.

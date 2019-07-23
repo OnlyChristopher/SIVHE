@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="sivhe" autoUploadExternalChanges="true">
+    <serverData>
+      <paths name="sivhe">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath path="/intranet/public/storage" />
+            <excludedPath path="/intranet/public/assets/plugins" />
+            <excludedPath path="/intranet/storage" />
+            <excludedPath path="/intranet/vendor" />
+            <excludedPath path="/intranet/bootstrap" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ON_EXPLICIT_SAVE" />
+  </component>
+</project>

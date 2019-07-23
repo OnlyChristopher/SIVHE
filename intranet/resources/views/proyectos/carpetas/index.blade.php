@@ -53,33 +53,7 @@
                 @endif
                     @if ($proyectos->carpetas == 1)
                         <div id="jstree-default">
-                            {{--<ul>
-                                <li data-jstree='{"opened":true}' >
-                                    01.Ingenieria
-                                    <ul>
-                                        <li data-jstree='{"opened":true }' >
-                                            Prueba 1
-                                            <ul>
-                                                <li data-jstree='{"opened":true}' >
-                                                    Prueba 1.1
-                                                    <ul>
-                                                        <li data-jstree='{"opened":true, "selected":true }' >
-                                                            Prueba 1.1.1
-                                                            <ul>
-                                                                <li data-jstree='{ "icon" : "fa fa-file fa-lg text-primary" }'><a href="#">3555A</a></li>
-                                                                <li data-jstree='{ "icon" : "fa fa-file fa-lg text-primary" }'><a href="#">3555B</a></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>02.Licitacion</li>
-                                <li>03.Ejecucion</li>
-                                <li>04.Cierre</li>
-                            </ul>--}}
+                            
                             {!! $tree !!}
 
                         </div>
@@ -94,5 +68,52 @@
         </div>
     </div>
     <!-- end panel -->
+    @push('scripts')
+        <script>
+            let edit_folder = function(id) {
+                let url = "{{ route('carpetasProyectosEdit', ':id') }}";
+                url = url.replace(':id', id);
+                let urlTwo = "{{ route('fileCarpetasProyectosShow',':id') }}";
+                urlTwo = urlTwo.replace(':id', id);
+                $('#id_carpetasecundaria').val(url);
+                $('#id_archivos').val(urlTwo);
+            };
 
+            let detail_folder = function(proyecto, id) {
+                let url = "{{ route('carpetasProyectosList', ['proyecto' => ':proyecto' , 'id' => ':id'])}}";
+                //console.log(url);
+                url = url.replace(':id', id);
+                url = url.replace(':proyecto', proyecto);
+                $('#id_archivos').val(url);
+                $('#id_carpetaprincipal').val(url);
+            };
+
+            $('.edit-folder').on('click', function() {
+                let url = $('#id_carpetasecundaria').val();
+                if (url) {
+                    document.location.href = url;
+                } else {
+                    alert('Seleccione carpeta a editar');
+                }
+            });
+
+            $('.edit-file').on('click', function() {
+                let url = $('#id_archivos').val();
+                if (url) {
+                    document.location.href = url;
+                } else {
+                    alert('Seleccione carpeta a editar');
+                }
+            });
+
+            $('.detail-folder').on('click', function() {
+                let url = $('#id_carpetaprincipal').val();
+                if (url) {
+                    document.location.href = url;
+                } else {
+                    alert('Seleccione carpeta principal');
+                }
+            });
+        </script>
+    @endpush
 @endsection

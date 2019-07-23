@@ -101,47 +101,4 @@ $("select[name='id_carpetaprincipal']").change(function() {
 let usuario = "{{Auth::user()->id}}";
 let token = $("input[name='_token']").val();
 
-let edit_folder = function(id) {
-    let url = "{{ route('carpetasProyectosEdit', ':id') }}";
-    url = url.replace(':id', id);
-    let urlTwo = "{{ route('fileCarpetasProyectosShow',':id') }}";
-    urlTwo = urlTwo.replace(':id', id);
-    $('#id_carpetasecundaria').val(url);
-    $('#id_archivos').val(urlTwo);
-};
 
-let detail_folder = function(proyecto, id) {
-    let url = "{{ route('carpetasProyectosList', ['proyecto' => ':proyecto' , 'id' => ':id'])}}";
-    //console.log(url);
-    url = url.replace(':id', id);
-    url = url.replace(':proyecto', proyecto);
-    $('#id_archivos').val(url);
-    $('#id_carpetaprincipal').val(url);
-};
-
-$('.edit-folder').on('click', function() {
-    let url = $('#id_carpetasecundaria').val();
-    if (url) {
-        document.location.href = url;
-    } else {
-        alert('Seleccione carpeta a editar');
-    }
-});
-
-$('.edit-file').on('click', function() {
-    let url = $('#id_archivos').val();
-    if (url) {
-        document.location.href = url;
-    } else {
-        alert('Seleccione carpeta a editar');
-    }
-});
-
-$('.detail-folder').on('click', function() {
-    let url = $('#id_carpetaprincipal').val();
-    if (url) {
-        document.location.href = url;
-    } else {
-        alert('Seleccione carpeta principal');
-    }
-});

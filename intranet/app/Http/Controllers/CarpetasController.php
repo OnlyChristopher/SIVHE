@@ -324,8 +324,11 @@ class CarpetasController extends Controller
 
 	    DB::table('carpetas_secundarias')->where('id','=', $id)->update($data);
 
-	    $oldname = '../intranet/storage/app/proyecto/'.$id_proyecto.'/'.$princiaples->nombre.'/'.$secundarias->nombre;
-	    $newname = '../intranet/storage/app/proyecto/'.$id_proyecto.'/'.$princiaples->nombre.'/'.$nombre;
+	    $path = storage_path();
+
+
+	    $oldname = $path.'/app/proyecto/'.$id_proyecto.'/'.$princiaples->nombre.'/'.$secundarias->nombre;
+	    $newname = $path.'/app/proyecto/'.$id_proyecto.'/'.$princiaples->nombre.'/'.$nombre;
 
 	    rename($oldname, $newname);
 
