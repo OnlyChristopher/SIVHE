@@ -78,25 +78,7 @@ $('.alert[data-auto-dismiss]').each(function(index, element) {
     }, timeout);
 });
 
-$("select[name='id_carpetaprincipal']").change(function() {
-    let codigo = $(this).val();
-    let id_proyecto = $("input[name='id_proyecto']").val();
-    let token = $("input[name='_token']").val();
-    $.ajax({
-        url: "<?php echo route( 'select-ajax' ) ?>",
-        method: 'POST',
-        data: {
-            codigo: codigo,
-            id_proyecto: id_proyecto,
-            _token: token
-        },
-        success: function(data) {
-            $("select[name='id_carpetasecundaria']").html('');
-            $("select[name='id_carpetasecundaria']").html(data.options);
-            $("select[name='id_carpetasecundaria']").selectpicker('refresh');
-        }
-    });
-});
+
 
 let usuario = "{{Auth::user()->id}}";
 let token = $("input[name='_token']").val();

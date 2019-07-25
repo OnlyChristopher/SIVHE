@@ -37,7 +37,7 @@
                     </div>
                 @endif
                 <div class="col-md-8 offset-md-2">
-                    <form action="{{route("fileStore")}}"  method="post" enctype="multipart/form-data" data-parsley-validate="true" autocomplete="off" >
+                    <form action="{{route("fileStore")}}"  method="post"  data-parsley-validate="true" autocomplete="off" >
                         @csrf
                         <div class="form-group row m-b-10">
                             <label class="col-md-3 text-md-right col-form-label" for="id_areas">Carpetas Principales</label>
@@ -63,6 +63,7 @@
                             <div class="col-md-6">
                                 <input type="file" accept="*" multiple onchange="uploadFile()"  name="files[]" id="files" placeholder="Seleccione Archivo" class="form-control" data-parsley-required="true" data-parsley-required-message="Por favor Seleccione Archivo">
                                 <progress id="progressBar" value="0" max="100" ></progress>
+                                <input type="hidden" id="preview" name="preview">
                                 <h3 id="status"></h3>
                                 <p id="loaded_n_total"></p>
                             </div>
@@ -86,7 +87,8 @@
             </div>
         </div>
     </div>
-    
+@endsection
+@push('scripts')
     <script type="text/javascript">
         function _(el) {
             return document.getElementById(el);
@@ -114,27 +116,51 @@
             ajax.addEventListener("load", completeHandler, false);
             ajax.addEventListener("error", errorHandler, false);
             ajax.addEventListener("abort", abortHandler, false);
-            ajax.open("POST", "<?php echo route('fileStorePreview') ?>"); // http://www.developphp.com/video/JavaScript/File-Upload-Progress-Bar-Meter-Tutorial-Ajax-PHP
+            ajax.open("POST", "{{ route('fileStorePreview') }}"); // http://www.developphp.com/video/JavaScript/File-Upload-Progress-Bar-Meter-Tutorial-Ajax-PHP
             //use file_upload_parser.php from above url
             ajax.send(formdata);
         }
+
         function progressHandler(event) {
             _("loaded_n_total").innerHTML = "Subiendo " + event.loaded + " bytes de " + event.total;
             let percent = (event.loaded / event.total) * 100;
             _("progressBar").value = Math.round(percent);
             _("status").innerHTML = Math.round(percent) + "% cargando... espere por favor";
         }
+
         function completeHandler(event) {
             _("status").innerHTML = event.target.responseText;
+            _("preview").value = _("files").files[0].name;
             _("progressBar").style.display = 'none';
             _("loaded_n_total").innerText = '';
             //_("progressBar").value = 0; //wil clear progress bar after successful upload
         }
+
         function errorHandler(event) {
             _("status").innerHTML = "Subida fallida";
         }
+
         function abortHandler(event) {
             _("status").innerHTML = "Subida Abortada";
         }
+        $("select[name='id_carpetaprincipal']").change(function() {
+            let codigo = $(this).val();
+            let id_proyecto = $("input[name='id_proyecto']").val();
+            let token = $("input[name='_token']").val();
+            $.ajax({
+                url: "{{ route( 'select-ajax' ) }}",
+                method: 'POST',
+                data: {
+                    codigo: codigo,
+                    id_proyecto: id_proyecto,
+                    _token: token
+                },
+                success: function(data) {
+                    $("select[name='id_carpetasecundaria']").html('');
+                    $("select[name='id_carpetasecundaria']").html(data.options);
+                    $("select[name='id_carpetasecundaria']").selectpicker('refresh');
+                }
+            });
+        });
     </script>
-@endsection
+@endpush
