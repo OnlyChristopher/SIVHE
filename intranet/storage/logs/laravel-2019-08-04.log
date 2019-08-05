@@ -1,0 +1,22 @@
+[2019-08-04 00:31:42] production.ERROR: file_get_contents(D:\Proyectos\SIVHE\intranet\.env): failed to open stream: No such file or directory {"exception":"[object] (ErrorException(code: 0): file_get_contents(D:\\Proyectos\\SIVHE\\intranet\\.env): failed to open stream: No such file or directory at D:\\Proyectos\\SIVHE\\intranet\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\KeyGenerateCommand.php:96)
+[stacktrace]
+#0 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'file_get_conten...', 'D:\\\\Proyectos\\\\SI...', 96, Array)
+#1 D:\\Proyectos\\SIVHE\\intranet\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\KeyGenerateCommand.php(96): file_get_contents('D:\\\\Proyectos\\\\SI...')
+#2 D:\\Proyectos\\SIVHE\\intranet\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\KeyGenerateCommand.php(80): Illuminate\\Foundation\\Console\\KeyGenerateCommand->writeNewEnvironmentFileWith('base64:8+OkiAIy...')
+#3 D:\\Proyectos\\SIVHE\\intranet\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\KeyGenerateCommand.php(45): Illuminate\\Foundation\\Console\\KeyGenerateCommand->setKeyInEnvironmentFile('base64:8+OkiAIy...')
+#4 [internal function]: Illuminate\\Foundation\\Console\\KeyGenerateCommand->handle()
+#5 D:\\Proyectos\\SIVHE\\intranet\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#6 D:\\Proyectos\\SIVHE\\intranet\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#7 D:\\Proyectos\\SIVHE\\intranet\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#8 D:\\Proyectos\\SIVHE\\intranet\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#9 D:\\Proyectos\\SIVHE\\intranet\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#10 D:\\Proyectos\\SIVHE\\intranet\\vendor\\symfony\\console\\Command\\Command.php(255): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#11 D:\\Proyectos\\SIVHE\\intranet\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(170): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#12 D:\\Proyectos\\SIVHE\\intranet\\vendor\\symfony\\console\\Application.php(921): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#13 D:\\Proyectos\\SIVHE\\intranet\\vendor\\symfony\\console\\Application.php(273): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Foundation\\Console\\KeyGenerateCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#14 D:\\Proyectos\\SIVHE\\intranet\\vendor\\symfony\\console\\Application.php(149): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#15 D:\\Proyectos\\SIVHE\\intranet\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(89): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#16 D:\\Proyectos\\SIVHE\\intranet\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(122): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#17 D:\\Proyectos\\SIVHE\\intranet\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 {main}
+"} 

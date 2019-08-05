@@ -77,6 +77,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('conductores', 'ConductoresController');
 	Route::resource('vehiculos', 'VehiculosController');
 
+	Route::resource('antamina', 'AntaminaController');
+	Route::resource('impuestos', 'ImpuestoController');
+
 
 });
 

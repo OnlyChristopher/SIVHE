@@ -37,7 +37,7 @@ class CarpetasController extends Controller
 		                          ->where('id_proyecto','=',$id)
 		                          ->whereNull('id_carpetasecundaria')
                                   ->get();
-                                  
+
             $files =         DB::table('archivos_carpetas')
                                  ->where('id_proyecto','=',$id)
                                  ->get();
@@ -379,11 +379,11 @@ class CarpetasController extends Controller
 
     public function destroyfolder($id)
     {
-        try{        
+        try{
             $carpeta = DB::table('carpetas_secundarias')
                         ->where('id','=',$id)
                         ->first();
-                        
+
             $folder  = DB::table('carpetas_principales')
                         ->where('id',$carpeta->id_carpetaprincipal)
                         ->first();
@@ -422,7 +422,7 @@ class CarpetasController extends Controller
 
 	public function file($id)
 	{
-		$proyectos = DB::table('proyectos')
+	    $proyectos = DB::table('proyectos')
 		               ->where('id_proyecto','=',$id)
 		               ->first();
 		$carpetas =  DB::table('carpetas_principales')
@@ -430,8 +430,14 @@ class CarpetasController extends Controller
 		return view('proyectos.carpetas.file', ['proyectos' => $proyectos, 'carpetas' => $carpetas]);
 	}
 
+	/**
+	 * @param Request $request
+	 *
+	 * @return string
+	 */
 	public function filestorepreview(Request $request){
-		try{
+
+        try{
 			$id_carpetaprincipal    = $request->input('id_carpetaprincipal');
 			$id_carpetasecundaria   = $request->input('id_carpetasecundaria');
 			$id_proyecto            = $request->input('id_proyecto');
@@ -448,17 +454,12 @@ class CarpetasController extends Controller
 					$name   =   $file->getClientOriginalName();
 					$file->storeAs('proyecto/'.$id_proyecto.'/'.$carpetaprincipal->nombre.'/'.$carpetasecundaria->nombre, $name);
 				}
-				return 'Subio el Archivo, ahora guarde el registro';
-
 			}else{
 				foreach ($request->file('files') as $file){
 					$name   =   $file->getClientOriginalName();
 					$file->storeAs('proyecto/'.$id_proyecto.'/'.$carpetaprincipal->nombre.'/', $name);
 				}
-				return 'Subio el Archivo, ahora guarde el registro';
-
 			}
-
 		}catch (\Exception $e) {
 			return back()->with('success',$e->getMessage());
 		}

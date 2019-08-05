@@ -133,11 +133,11 @@
                     </a>
                 </li>
                 @if(Auth::user()->profile == 1 || Auth::user()->profile == 2 || Auth::user()->profile == 3 || Auth::user()->profile == 4)
-                    <li class="has-sub active @yield('clase-open-empleados') @yield('clase-active-documentos')">
+                    <li class="has-sub active @yield('clase-open-administracion')">
                         <a href="javascript:;">
                             <b class="caret"></b>
                             <i class="fa fa-align-left"></i>
-                            <span>Control de Empleados</span>
+                            <span>Administración</span>
                         </a>
                         <ul class="sub-menu" style="@yield('clase-open-documentos-block')">
                             <li class="@yield('clase-active-registro')">
@@ -146,33 +146,21 @@
                             <li class="@yield('clase-active-consulta')">
                                 <a href="{{route('consultas.index')}}">{{ __('Consulta de Empleados') }}</a>
                             </li>
-                        </ul>
-                    </li>
-                
-                @endif @if(Auth::user()->profile == 1 || Auth::user()->profile == 2 || Auth::user()->profile == 3 || Auth::user()->profile == 4)
-                    <li class="has-sub active @yield('clase-open-vehiculos') @yield('clase-active-documentos')">
-                        <a href="javascript:;">
-                            <b class="caret"></b>
-                            <i class="fa fa-align-left"></i>
-                            <span>Control de Vehiculos</span>
-                        </a>
-                        <ul class="sub-menu" style="@yield('clase-open-documentos-block')">
                             <li class="@yield('clase-active-conductores-registro')"><a href="{{route('conductores.index')}}">{{ __('Registro de Conductores') }}</a>
                             </li>
-                            
+    
                             <li class="@yield('clase-active-vehiculos-registro')"><a href="{{route('vehiculos.index')}}">{{ __('Registro de Vehículos') }}</a>
                             </li>
-                            
+    
                             <li class="@yield('clase-active-procedimientos')"><a href="#">{{ __('Retiro y Devolucion de Vehículos') }}</a>
                             </li>
-                            
+    
                             <li class="@yield('clase-active-procedimientos')"><a href="#">{{ __('Programar Mantenimiento') }}</a>
                             </li>
-                            
+    
                             <li class="@yield('clase-active-procedimientos')"><a href="#">{{ __('Consulta de Vehiculos') }}</a>
                             </li>
                         </ul>
-                    
                     </li>
                 
                 @endif @if(Auth::user()->profile == 1 || Auth::user()->profile == 2 || Auth::user()->profile == 3 || Auth::user()->profile == 4)
@@ -181,7 +169,7 @@
                         <a href="javascript:;">
                             <b class="caret"></b>
                             <i class="fa fa-th-large"></i>
-                            <span>Proyectos</span>
+                            <span>Mineroducto</span>
                         </a>
                         <ul class="sub-menu">
                             <li class="@yield('clase-active-proyectos')">
@@ -206,14 +194,11 @@
                         </a>
                         <ul class="sub-menu">
                             <li class="@yield('clase-active-impuestos')">
-                                <a href="#">{{ __('Obras por Impuesto') }}</a>
+                                <a href="{{route('impuestos.index')}}">{{ __('Obras por Impuesto') }}</a>
                             </li>
-                
-                            @if(Auth::user()->profile == 1 || Auth::user()->profile == 2 || Auth::user()->profile == 4)
-                                <li class="@yield('clase-active-antamina')">
-                                    <a href="#">{{ __('Obras por Antamina') }}</a>
-                                </li>
-                            @endif
+                            <li class="@yield('clase-active-antamina')">
+                                <a href="{{route('antamina.index')}}">{{ __('Obras por Antamina') }}</a>
+                            </li>
                         </ul>
                     </li>
                 

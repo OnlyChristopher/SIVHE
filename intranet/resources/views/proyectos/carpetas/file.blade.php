@@ -42,7 +42,8 @@
                         <div class="form-group row m-b-10">
                             <label class="col-md-3 text-md-right col-form-label" for="id_areas">Carpetas Principales</label>
                             <div class="col-md-6">
-                                <select  name="id_carpetaprincipal" id="id_carpetaprincipal" class="form-control selectpicker" data-live-search="true" data-style="btn-white" data-parsley-required="true" data-parsley-required-message="Por favor Seleccione Carpeta">
+                                <label for="id_carpetaprincipal"></label>
+                                <select name="id_carpetaprincipal" id="id_carpetaprincipal" class="form-control selectpicker" data-live-search="true" data-style="btn-white" data-parsley-required="true" data-parsley-required-message="Por favor Seleccione Carpeta">
                                     <option value="">--- Seleccionar Carpeta ---</option>
                                     @foreach ($carpetas as $carpeta)
                                         <option value="{{$carpeta->id}}" >{{$carpeta->nombre}}</option>

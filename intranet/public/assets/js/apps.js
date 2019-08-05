@@ -78,7 +78,11 @@ $('.alert[data-auto-dismiss]').each(function(index, element) {
     }, timeout);
 });
 
-
+$('[type="button"]').on('click', function () {
+    if($(this).data('href')){
+        window.location.href = $(this).data('href') ;
+    }
+});
 
 let usuario = "{{Auth::user()->id}}";
 let token = $("input[name='_token']").val();
